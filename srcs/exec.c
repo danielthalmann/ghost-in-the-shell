@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpinto-r <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: dthalman <daniel@thalmann.li>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 18:35:14 by rpinto-r          #+#    #+#             */
-/*   Updated: 2022/03/12 01:22:13 by rpinto-r         ###   ########.fr       */
+/*   Updated: 2022/03/17 09:52:09 by dthalman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	exec_single_command(t_shell *shell, t_cmd *cmd)
 	pid_t	pid;
 	int		status;
 
-	if (is_builtin_command(cmd))
+	if (is_builtin_no_pipe_command(cmd))
 		exec_builtin_command(shell, cmd);
 	else if (is_invalid_command(shell, cmd) == 0)
 	{
@@ -57,7 +57,9 @@ int	exec_single_command(t_shell *shell, t_cmd *cmd)
 		else if (pid == 0)
 		{
 			handle_redirect_file(shell, cmd);
-			if (execve(cmd->name, cmd->args, shell->envs))
+			if (is_builtin_command(cmd))
+				exec_builtin_command(shell, cmd);
+			else if (execve(cmd->name, cmd->args, shell->envs))
 				show_command_error(shell, cmd->name, strerror(errno), errno);
 			exit(shell->exit_status);
 		}

@@ -6,7 +6,7 @@
 /*   By: dthalman <daniel@thalmann.li>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 17:57:18 by rpinto-r          #+#    #+#             */
-/*   Updated: 2022/03/12 11:44:17 by dthalman         ###   ########.fr       */
+/*   Updated: 2022/03/17 09:52:22 by dthalman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ int		is_invalid_command(t_shell *shell, t_cmd *cmd);
 int		is_unexpected_token_command(t_shell *shell);
 int		is_valid_here_doc(t_shell *shell);
 int		is_builtin_command(t_cmd *cmd);
+int		is_builtin_no_pipe_command( t_cmd *cmd);
 
 /* error */
 int		show_command_error(t_shell *shell, char *cmd, char *msg, int num);
